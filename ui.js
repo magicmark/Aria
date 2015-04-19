@@ -1,31 +1,40 @@
+var login = new LoginManager(['a', 'a', 'a', 'd', 'a', 'f', 'f', 'e', 'e', 'd', 'a']);
+
+//var login = new LoginManager(['d', 'd', 'd']);
+
+
 Mike.on('error', function(e) {
     console.log('Uncaught error:', e);
 });
 
-var wheel = document.querySelector('.tuner .wheel'),
-    c = document.querySelector('.tuner .freq').childNodes[0],
-    flat = document.querySelector('.tuner .flat'),
-    sharp = document.querySelector('.tuner .sharp'),
-    arrow = document.querySelector('.tuner .arrow'),
-    pitch = null;
+// var wheel = document.querySelector('.tuner .wheel'),
+//     c = document.querySelector('.tuner .freq').childNodes[0],
+//     flat = document.querySelector('.tuner .flat'),
+//     sharp = document.querySelector('.tuner .sharp'),
+//     arrow = document.querySelector('.tuner .arrow'),
+    var pitch = null;
 
-wheel.rotate = function (angle) {
-    var prefixes = ['webkitT', 'MozT', 'msT', 'OT', 't'];
+// wheel.rotate = function (angle) {
+//     var prefixes = ['webkitT', 'MozT', 'msT', 'OT', 't'];
 
-    for (var i=0; i<prefixes.length; i++) {
-        this.style[prefixes[i] + 'ransform'] = 'rotate(' + angle + 'rad)';
-    }
-};
+//     for (var i=0; i<prefixes.length; i++) {
+//         this.style[prefixes[i] + 'ransform'] = 'rotate(' + angle + 'rad)';
+//     }
+// };
 
 function toggleClass (elem, cls, add) {
-    if (elem.classList) {
-        elem[add ? 'add' : 'remove'](cls);
-    } else if (typeof elem.className === 'string') {
-        elem.className = elem.className.replace(cls, '') +
-            (add ? ' ' + cls : '');
-    } else if (typeof elem.className === 'object') {
-        elem.className.baseVal = elem.className.baseVal.replace(cls, '') +
-            (add ? ' ' + cls : '');
+    try {
+        if (elem.classList) {
+            elem[add ? 'add' : 'remove'](cls);
+        } else if (typeof elem.className === 'string') {
+            elem.className = elem.className.replace(cls, '') +
+                (add ? ' ' + cls : '');
+        } else if (typeof elem.className === 'object') {
+            elem.className.baseVal = elem.className.baseVal.replace(cls, '') +
+                (add ? ' ' + cls : '');
+        }
+    } catch (e) {
+
     }
 }
     
@@ -71,13 +80,15 @@ mike.on('data', function(data) {
             isSharp = detune > 0.01,
             inTune = !isFlat && !isSharp;
             
-        wheel.rotate(angle);
-        c.textContent = Math.round(freq);
-
+        // wheel.rotate(angle);
+//        c.textContent = Math.round(freq);
+  /*
         toggleClass(flat, 'highlighted', isFlat);
         toggleClass(sharp, 'highlighted', isSharp);
         toggleClass(arrow, 'highlighted', inTune);
-        
+    */    
+        login.sing(freq);
+
         // TODO
         // 1. octave indicators
     }
@@ -96,3 +107,5 @@ function getAngle(midiNote) {
 function getOctave (midiNote) {
     return ~~(midiNote / 12);
 }
+
+
